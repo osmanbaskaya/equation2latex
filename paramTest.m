@@ -3,8 +3,8 @@
 % binary, encoder/vanilla
 
 inputType = [0, 1];
-modelTypes = {'softmax+autoencoder'};
-inputSizes = linspace(10000, 30000, 5);
+modelTypes = {'softmax', 'softmax+autoencoder'};
+inputSizes = linspace(10000, 60000, 6);
 %inputSizes = 20:10:100;
 
 
