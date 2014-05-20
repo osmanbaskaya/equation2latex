@@ -94,20 +94,25 @@ options.display = 'on';
 
 %%======================================================================
 %% STEP 3: Extract Features from the Supervised Dataset
-%  
-%  You need to complete the code in feedForwardAutoencoder.m so that the 
-%  following command will extract features from the data.
-
-%trainFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, ...
-%                                       trainData);
-
-%testFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, ...
-%                                       testData);
-
 
 trainFeatures = trainData;
 testFeatures = testData;
+
+
+% You need to complete the code in feedForwardAutoencoder.m so that the 
+% following command will extract features from the data.
+
+%trainFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, ...
+%                                      trainData);
+
+%testFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, ...
+%                                      testData);
+
+%trainFeatures(trainFeatures>0) = 1;
+%testFeatures(testFeatures>0) = 1;
 [hiddenSize, ~] = size(trainFeatures);
+
+%save opttheta opttheta
 
 %%======================================================================
 %% STEP 4: Train the softmax classifier
@@ -136,6 +141,7 @@ softmaxModel = softmaxTrain(hiddenSize, numClasses, lambda_softmax, ...
 % and softmaxModel
 
 [pred] = softmaxPredict(softmaxModel, testFeatures);
+save model softmaxModel;
 
 
 %% -----------------------------------------------------
