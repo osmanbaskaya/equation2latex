@@ -1,5 +1,4 @@
-
-
+clear,clc;
 inputSize = 28 * 28; % Size of input vector (MNIST images are 28x28)
 numClasses = 10;     % Number of classes (MNIST images fall into 10 classes)
 
@@ -10,6 +9,7 @@ labels = loadMNISTLabels('mnist/train-labels-idx1-ubyte');
 labels(labels==0) = 10; % Remap 0 to 10
 
 inputData = images;
+inputData(inputData>0)=1;
 
 % Randomly initialise theta
 theta = 0.005 * randn(numClasses * inputSize, 1);
@@ -26,6 +26,7 @@ labels = loadMNISTLabels('mnist/t10k-labels-idx1-ubyte');
 labels(labels==0) = 10; % Remap 0 to 10
 
 inputData = images;
+inputData(inputData>0)=1;
 
 % You will have to implement softmaxPredict in softmaxPredict.m
 [pred] = softmaxPredict(softmaxModel, inputData);

@@ -1,12 +1,14 @@
+clear,clc;
 load model; %softmaxModel
 
 directory = '../28_28_images/';
+inputSize=28*28;
 
 %% Load our test labels and features, O_O (Osman & Onur) dataset
 files = dir([directory, '*.png']);
 [numFiles, ~] = size(files);
 inputData = zeros(inputSize, numFiles);
-% labels = zeros(1, numFiles);
+labels = zeros(1, numFiles);
 for i=1:numFiles
     file = files(i);
     image_name = [directory, file.name];
@@ -16,6 +18,8 @@ for i=1:numFiles
     inputData(:,i) = I(:);
     labels(i) = str2num(strtok(file.name, '-'));
 end
+
+inputData(inputData>0)=1;
 
 [pred] = softmaxPredict(softmaxModel, inputData);
 

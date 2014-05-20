@@ -5,7 +5,7 @@ sparsityParam = 0.1; % desired average activation of the hidden units.
                     		            
 lambda = 3e-3;       % weight decay parameter       
 beta = 3;            % weight of sparsity penalty term   
-maxIter = 100;
+maxIter = 400;
 
 trainData = loadMNISTImages('mnist/train-images-idx3-ubyte');
 trainLabels = loadMNISTLabels('mnist/train-labels-idx1-ubyte');
@@ -30,7 +30,7 @@ visibleSize = inputSize;
                                    lambda, sparsityParam, ...
                                    beta, trainData), ...
                               theta, options);
-save opttheta-cont opttheta                         
+save opt                         
 
 trainFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, ...
                                        trainData);
@@ -41,8 +41,6 @@ testFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, ...
 softmaxModel = softmaxTrain(size(trainFeatures,1),...
             numLabels, ...
             1e-4, trainFeatures, trainLabels, options);
-
-save softmaxModel-cont softmaxModel       
 
 pred = softmaxPredict(softmaxModel, testFeatures);
 
