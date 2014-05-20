@@ -11,7 +11,7 @@ hiddenSize = 200;
 %% Load our test labels and features, O_O (Osman & Onur) dataset
 testFeatures = zeros(inputSize, 20);
 testLabels = zeros(20, 1);
-files = dir('my_images');
+files = dir('my_images/*.png');
 numFiles = size(files);
 for i=3:numFiles
     file = files(i);
@@ -26,7 +26,7 @@ for i=3:numFiles
 end
 
     
-testFeatures = reshape(testFeatures, inputSize, 20);
+% testFeatures = reshape(testFeatures, inputSize, 20);
 
 %testFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, testFeatures);
 

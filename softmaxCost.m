@@ -22,19 +22,23 @@ thetagrad = zeros(numClasses, inputSize);
 %  Instructions: Compute the cost and gradient for softmax regression.
 %                You need to compute thetagrad and cost.
 %                The groundTruth matrix might come in handy.
+z = theta * data;
+z = bsxfun(@minus, z, max(z, [], 1));
+ez = exp(z);
+prob = bsxfun(@rdivide, ez, sum(ez));
+log_prob = log(prob);
+cost = -1/numCases*sum(sum(log_prob .* groundTruth));
 
-M = exp(theta * data);
-actual = bsxfun(@dot, M, groundTruth);
-Z = sum(M);
+% J2
+wd = sum(theta .^ 2);
+cost = cost + lambda/2*sum(wd);
 
-[m,~] = size(labels);
-model_cost = -(1/m) * sum(log(actual ./ Z));
-weight_decay_cost = sum((lambda / 2) * theta(:) .^ 2);
-cost = model_cost + weight_decay_cost; % regularization ;)
-
-p = bsxfun(@rdivide, M, Z);
-thetagrad = -(1/m) * data * (groundTruth - p)';
-thetagrad = thetagrad' + (lambda * theta); % from regularization
+diff = groundTruth-prob;
+thetagrad = -1/numCases*(diff*data') + lambda*theta;
+% for j = 1:size(theta,1)
+%     temp = bsxfun(@times, data, diff(j,:));
+%     thetagrad(j,:) = (-1/numCases * sum(temp,2))' + lambda*theta(j,:);
+% end
 
 % ------------------------------------------------------------------
 % Unroll the gradient matrices into a vector for minFunc
