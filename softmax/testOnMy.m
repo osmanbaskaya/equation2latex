@@ -1,6 +1,4 @@
-clear,clc;
-load model; %softmaxModel
-
+function acc = testOnMy(model)
 directory = '../28_28_images/';
 inputSize=28*28;
 
@@ -21,7 +19,8 @@ end
 
 inputData(inputData>0)=1;
 
-[pred] = softmaxPredict(softmaxModel, inputData);
+[pred] = softmaxPredict(model, inputData);
 
 acc = mean(labels(:) == pred(:));
-fprintf('Accuracy: %0.3f%%\n', acc * 100);
+% fprintf('Accuracy: %0.3f%%\n', acc * 100);
+end
