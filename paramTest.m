@@ -11,12 +11,12 @@ for i=1:length(modelTypes)
     cd(modelType)
     for isBinary=inputType
         for inputSize=inputSizes
-            modelFile = sprintf('models/%s-%d-%d', modelType, inputSize, isBinary);
+            modelFile = sprintf('../models/%s-%d-%d', modelType, inputSize, isBinary);
             if strcmpi('softmax+autoencoder', modelType)
                 [model, trainAcc, theta] =  trainOnMnist(inputSize, isBinary);
                 testAcc = testOnMy(model, theta);
                 save(modelFile, 'model');
-                thetaFile = sprintf('models/theta-%d-%d', inputSize, isBinary);
+                thetaFile = sprintf('../models/theta-%d-%d', inputSize, isBinary);
                 save(thetaFile, 'theta');
             else 
                 [model, trainAcc] =  trainOnMnist(inputSize, isBinary);

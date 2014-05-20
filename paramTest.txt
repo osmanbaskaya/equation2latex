@@ -1,0 +1,58 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2014 The MathWorks, Inc.
+                    R2014a (8.3.0.532) 64-bit (glnxa64)
+                             February 11, 2014
+
+
+	This is a Classroom License for instructional use only.
+	Research and commercial use is prohibited.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+>> >> >> >> >> >> >> >> >> softmax	10000	0	0.903%	0.520%
+softmax	15000	0	0.914%	0.480%
+softmax	20000	0	0.919%	0.540%
+softmax	25000	0	0.920%	0.500%
+softmax	30000	0	0.922%	0.540%
+softmax	35000	0	0.924%	0.560%
+softmax	40000	0	0.924%	0.580%
+softmax	45000	0	0.925%	0.580%
+softmax	50000	0	0.925%	0.580%
+softmax	55000	0	0.926%	0.540%
+softmax	60000	0	0.926%	0.540%
+softmax	10000	1	0.884%	0.580%
+softmax	15000	1	0.899%	0.540%
+softmax	20000	1	0.905%	0.580%
+softmax	25000	1	0.907%	0.600%
+softmax	30000	1	0.912%	0.580%
+softmax	35000	1	0.913%	0.540%
+softmax	40000	1	0.914%	0.620%
+softmax	45000	1	0.914%	0.640%
+softmax	50000	1	0.916%	0.620%
+softmax	55000	1	0.917%	0.620%
+softmax	60000	1	0.917%	0.640%
+softmax+autoencoder	10000	0	0.947%	0.740%
+softmax+autoencoder	15000	0	0.953%	0.660%
+softmax+autoencoder	20000	0	0.952%	0.740%
+softmax+autoencoder	25000	0	0.952%	0.720%
+softmax+autoencoder	30000	0	0.952%	0.780%
+softmax+autoencoder	35000	0	0.956%	0.800%
+softmax+autoencoder	40000	0	0.953%	0.740%
+softmax+autoencoder	45000	0	0.952%	0.740%
+softmax+autoencoder	50000	0	0.955%	0.760%
+softmax+autoencoder	55000	0	0.956%	0.780%
+softmax+autoencoder	60000	0	0.954%	0.740%
+softmax+autoencoder	10000	1	0.944%	0.760%
+softmax+autoencoder	15000	1	0.950%	0.820%
+softmax+autoencoder	20000	1	0.950%	0.780%
+softmax+autoencoder	25000	1	0.951%	0.800%
+softmax+autoencoder	30000	1	0.951%	0.780%
+softmax+autoencoder	35000	1	0.952%	0.760%
+softmax+autoencoder	40000	1	0.951%	0.780%
+softmax+autoencoder	45000	1	0.951%	0.760%
+softmax+autoencoder	50000	1	0.953%	0.740%
+softmax+autoencoder	55000	1	0.956%	0.840%
+softmax+autoencoder	60000	1	0.953%	0.820%
+>> 
