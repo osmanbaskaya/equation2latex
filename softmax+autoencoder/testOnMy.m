@@ -1,7 +1,8 @@
-function acc = testOnMy(model)
+function acc = testOnMy(model, opttheta)
 
 directory = '../28_28_images/';
-inputSize=28*28;
+inputSize = 28*28;
+hiddenSize = 200;
 
 %% Load our test labels and features, O_O (Osman & Onur) dataset
 files = dir([directory, '*.png']);
@@ -19,8 +20,12 @@ for i=1:numFiles
 end
 
 inputData(inputData>0)=1;
+
+inputData = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, ...
+                                       inputData);
+
 [pred] = softmaxPredict(model, inputData);
 
 acc = mean(labels(:) == pred(:));
-% fprintf('Accuracy: %0.3f%%\n', acc * 100);
+
 end

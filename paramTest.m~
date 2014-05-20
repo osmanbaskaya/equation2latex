@@ -1,0 +1,13 @@
+%% Parameter test script
+
+% binary, encoder/vanilla
+
+inputType = [0, 1];
+modelTypes = {'vanilla', 'encoder'};
+
+for i=1:length(modelTypes)
+    modelType = modelTypes{i};
+    for isBinary=inputType
+       [model, trainAcc] = 
+    end 
+end
