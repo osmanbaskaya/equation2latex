@@ -1,6 +1,6 @@
 clear,clc;
-load opttheta-cont;
-load softmaxModel-cont;
+load opttheta-bin;
+load softmaxModel-bin;
 
 directory = '../28_28_images/';
 inputSize = 28*28;
