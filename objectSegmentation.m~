@@ -1,0 +1,19 @@
+function objects = objectSegmentation(CC, size)
+
+for i=1:CC.NumObjects
+    J = zeros(CC.ImageSize);
+    J(CC.PixelIdxList{i}) = 1;
+    Regions = regionprops(CC);
+    box = floor(Regions(i).BoundingBox);
+    object = J(box(2):box(2) + box(4), box(1):box(1) + box(3));
+    object = imresize(object, [25, 25]);
+    object = padarray(object, [3,3]);
+    % Check this 5 later.
+    object(object > 5) = 1;
+    figure, imshow(object);
+    % print 
+end
+
+
+
+end

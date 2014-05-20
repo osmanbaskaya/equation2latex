@@ -1,0 +1,53 @@
+%function preprocessedImage = imageSegmentation(filename)
+
+
+clear, close all
+filename = 'equation_images/resize.png';
+Size = 28;
+
+I = imread(filename);
+I = I(:,:, 1);
+CC = bwconncomp(I); 
+J = zeros(size(I));
+J(CC.PixelIdxList{1}) = 1;
+Regions = regionprops(CC);
+box = floor(Regions(1).BoundingBox);
+object = J(box(2):box(2) + box(4), box(1):box(1) + box(3));
+imresize(object, [box(3)/28, box(4)/28]);
+
+
+[R,C] = find(J == 1);
+horMargin = max(R) - min(R);
+vertMargin = 0;
+
+
+space = round((Size - (max(C) - min(C))) / 2);
+Cnew = C - min(C) + space;
+
+
+Inew = zeros(28,28);
+idx = sub2ind(size(Inew), R, Cnew);
+Inew(idx) = 1;
+imshow(Inew)
+
+
+
+%% Resize
+
+
+%% Classification
+
+
+%% Relativity
+
+
+%% Latex Mapping
+
+
+
+
+
+
+
+
+%end

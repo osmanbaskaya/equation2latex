@@ -1,5 +1,5 @@
 function [cost,grad] = sparseAutoencoderCost(theta, visibleSize, hiddenSize, ...
-                                             lambda, sparsityParam, beta, data)
+                                             lambda, sParam, beta, data)
 
 % visibleSize: the number of input units (probably 64) 
 % hiddenSize: the number of hidden units (probably 25) 
@@ -13,18 +13,18 @@ function [cost,grad] = sparseAutoencoderCost(theta, visibleSize, hiddenSize, ...
 % We first convert theta to the (W1, W2, b1, b2) matrix/vector format, so that this 
 % follows the notation convention of the lecture notes. 
 
-W1 = reshape(theta(1:hiddenSize*visibleSize), hiddenSize, visibleSize);
-W2 = reshape(theta(hiddenSize*visibleSize+1:2*hiddenSize*visibleSize), visibleSize, hiddenSize);
-b1 = theta(2*hiddenSize*visibleSize+1:2*hiddenSize*visibleSize+hiddenSize);
-b2 = theta(2*hiddenSize*visibleSize+hiddenSize+1:end);
+% W1 = reshape(theta(1:hiddenSize*visibleSize), hiddenSize, visibleSize);
+% W2 = reshape(theta(hiddenSize*visibleSize+1:2*hiddenSize*visibleSize), visibleSize, hiddenSize);
+% b1 = theta(2*hiddenSize*visibleSize+1:2*hiddenSize*visibleSize+hiddenSize);
+% b2 = theta(2*hiddenSize*visibleSize+hiddenSize+1:end);
 
 % Cost and gradient variables (your code needs to compute these values). 
 % Here, we initialize them to zeros. 
-cost = 0;
-W1grad = zeros(size(W1)); 
-W2grad = zeros(size(W2));
-b1grad = zeros(size(b1)); 
-b2grad = zeros(size(b2));
+% cost = 0;
+% W1grad = zeros(size(W1)); 
+% W2grad = zeros(size(W2));
+% b1grad = zeros(size(b1)); 
+% b2grad = zeros(size(b2));
 
 %% ---------- YOUR CODE HERE --------------------------------------
 %  Instructions: Compute the cost/optimization objective J_sparse(W,b) for the Sparse Autoencoder,
@@ -41,48 +41,54 @@ b2grad = zeros(size(b2));
 % Stated differently, if we were using batch gradient descent to optimize the parameters,
 % the gradient descent update to W1 would be W1 := W1 - alpha * W1grad, and similarly for W2, b1, b2. 
 % 
+% [cost, grad] = J(theta,visibleSize,hiddenSize,data, lambda, beta, sparsityParam);
+% [c1, g1] = J1(theta,visibleSize,hiddenSize,data, beta, sparsityParam);
+% [c2, g2] = J2(theta,visibleSize,hiddenSize,data,lambda);
+% cost=c1+c2;
+% grad=g1+g2;
+W1 = reshape(theta(1:hiddenSize*visibleSize), hiddenSize, visibleSize);
+W2 = reshape(theta(hiddenSize*visibleSize+1:2*hiddenSize*visibleSize), visibleSize, hiddenSize);
+b1 = theta(2*hiddenSize*visibleSize+1:2*hiddenSize*visibleSize+hiddenSize);
+b2 = theta(2*hiddenSize*visibleSize+hiddenSize+1:end);
+m = length(data);
+grad = zeros(length(theta),1);
 
-
-%% Feedforward
-
-
-z2 = bsxfun(@plus, W1 * data, b1); 
+a1=data;
+z2 = W1 * data + repmat(b1,1,m);
 a2 = sigmoid(z2);
-z3 = bsxfun(@plus, W2 * a2, b2);
-a3 = sigmoid(z3);
+z3 = W2 * a2 + repmat(b2,1,m);
+h = sigmoid(z3);
+a3 = h;
+diff = (data-h);
+cost = sum(0.5*(sqrt(sum(diff.^2)).^2))/m;
+cost = cost + (lambda/2)*(sum(sum(W1.^2)) + sum(sum(W2.^2)));%J2
 
-%% Cost Calculation
+rHats = mean(a2')';%for sparsity
 
+delta3 = -1*(data-a3) .* a3 .* (1 - a3);
+% delta2 = (W2'*delta3) .* a2 .* (1-a2);
+vk = kl_drv(sParam, rHats);%for sparsity
+W2_delta3 = W2'*delta3;
+delta2 = (W2_delta3 + beta*repmat(vk,1,length(W2_delta3))) .* a2 .* (1-a2);
 
-[~, m] = size(data);
+% costJ3
+y = kl(sParam,rHats);
+costJ3 = beta*kl(sParam,rHats);
+cost = cost + costJ3;
 
-cost = sum(sum((a3 - data).^2)) / (2*m); % sum-of-squares error
-cost = cost + (lambda / 2) * (sum(dot(W1, W1)) + sum(dot(W2, W2))); % weight-decay part
-q = sum(a2, 2) / m; % sparsity for all hidden units.
-sparsity_cost = beta * sum(KLdiv(sparsityParam, q));
-cost = cost + sparsity_cost; % Sparsity cost
+W1grad = delta2*a1'/m + lambda*W1;
+W2grad = delta3*a2'/m + lambda*W2;
+b1grad = sum(delta2')/m;
+b2grad = sum(delta3')/m;
 
-%% Backpropagation
-
-delta3 = -1 * (data - a3) .* (a3 .* (1-a3));
-t1 = W2' * delta3;
-t2 = beta * ((-sparsityParam ./ q) + ((1-sparsityParam) ./ (1-q)));
-delta2 = bsxfun(@plus, t1, t2) .* (a2 .* (1-a2));
-
-W1grad = (delta2 * data' ./ m) + lambda .* W1;
-W2grad = (delta3 * a2' ./ m) + lambda .* W2;
-
-b1grad = sum(delta2,2) ./ m;
-b2grad = sum(delta3,2) ./ m;
-
+grad = [W1grad(:) ; W2grad(:) ; b1grad(:) ; b2grad(:)];
 
 %-------------------------------------------------------------------
 % After computing the cost and gradient, we will convert the gradients back
 % to a vector format (suitable for minFunc).  Specifically, we will unroll
 % your gradient matrices into a vector.
 
-grad = [W1grad(:) ; W2grad(:) ; b1grad(:) ; b2grad(:)];
-
+% grad = [W1grad(:) ; W2grad(:) ; b1grad(:) ; b2grad(:)];
 
 end
 
@@ -91,12 +97,26 @@ end
 % in your computation of the costs and the gradients.  This inputs a (row or
 % column) vector (say (z1, z2, z3)) and returns (f(z1), f(z2), f(z3)). 
 
-function sigm = sigmoid(x)
-  
-    sigm = 1 ./ (1 + exp(-x));
+% function sigm = sigmoid(x)
+%   
+%     sigm = 1 ./ (1 + exp(-x));
+% end
+function [ val ] = kl( rho, rho_hats )
+%UNTITLED3 Summary of this function goes here
+%   Detailed explanation goes here
+val=0;
+for j = 1:length(rho_hats)
+    val = val + (rho*log(rho/rho_hats(j))) ....
+    + ((1-rho)*(log((1-rho)/(1-rho_hats(j)))));
 end
 
-function div = KLdiv(p, q)
-    % p sparsity param
-    div = p * log(p ./ q) + (1-p) * log((1-p) ./ (1-q)); 
+end
+function [ vals ] = kl_drv( rho, rho_hats )
+%UNTITLED4 Summary of this function goes here
+%   Detailed explanation goes here
+vals=zeros(length(rho_hats),1);
+for i = 1:length(rho_hats)
+    vals(i) = -1*(rho/rho_hats(i))+((1-rho)/(1-rho_hats(i)));
+end
+
 end

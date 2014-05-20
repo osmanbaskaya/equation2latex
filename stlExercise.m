@@ -54,6 +54,9 @@ trainLabels = mnistLabels(trainSet)' + 1; % Shift Labels to the Range 1-5
 
 testData   = mnistData(:, testSet);
 testLabels = mnistLabels(testSet)' + 1;   % Shift Labels to the Range 1-5
+testData(testData>0) = 1;
+trainData(trainData>0) = 1;
+
 
 % Output Some Statistics
 fprintf('# examples in unlabeled set: %d\n', size(unlabeledData, 2));
@@ -102,16 +105,11 @@ testFeatures = testData;
 % You need to complete the code in feedForwardAutoencoder.m so that the 
 % following command will extract features from the data.
 
-%trainFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, ...
-%                                      trainData);
+%trainFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, trainData);
+%testFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, testData);
 
-%testFeatures = feedForwardAutoencoder(opttheta, hiddenSize, inputSize, ...
-%                                      testData);
 
-%trainFeatures(trainFeatures>0) = 1;
-%testFeatures(testFeatures>0) = 1;
 [hiddenSize, ~] = size(trainFeatures);
-
 %save opttheta opttheta
 
 %%======================================================================

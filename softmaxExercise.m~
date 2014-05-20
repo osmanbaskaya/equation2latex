@@ -117,7 +117,7 @@ inputData = images;
 
 % You will have to implement softmaxPredict in softmaxPredict.m
 [pred] = softmaxPredict(softmaxModel, inputData);
-save model softmaxModel;
+save model sot
 
 acc = mean(labels(:) == pred(:));
 fprintf('Accuracy: %0.3f%%\n', acc * 100);
