@@ -1,10 +1,8 @@
-%function preprocessedImage = imageSegmentation(filename)
+%function preprocessedImage = imageSegmentation(model, filename)
 
-
-clear, close all
-filename = 'equation_images/resize.png';
+filename = 'equation_images/relativity.png';
 ImageSize = 28;
-load model
+load model;
 
 I = imread(filename);
 I = I(:,:, 1);
@@ -14,14 +12,16 @@ objects = objectSegmentation(CC, ImageSize);
 
 %% Classification
 
-pred = softmaxPredict(softmaxModel, objects)
-
+preds = softmaxPredict(softmaxModel, objects);
 
 %% Relativity
+
+positions = getRelativePositions(CC);
 
 
 %% Latex Mapping
 
+getLatexMapping(preds, positions);
 
 
 
