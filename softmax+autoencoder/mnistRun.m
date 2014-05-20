@@ -9,10 +9,6 @@ maxIter = 100;
 
 trainData = loadMNISTImages('mnist/train-images-idx3-ubyte');
 trainLabels = loadMNISTLabels('mnist/train-labels-idx1-ubyte');
-
-trainData = trainData(:, 1:10000);
-trainLabels = trainLabels(1:10000);
-
 trainLabels(trainLabels==0) = 10; % Remap 0 to 10
 numLabels  = length(unique(trainLabels));
 
@@ -20,11 +16,12 @@ testData = loadMNISTImages('mnist/t10k-images-idx3-ubyte');
 testLabels = loadMNISTLabels('mnist/t10k-labels-idx1-ubyte');
 testLabels(testLabels==0) = 10; % Remap 0 to 10
 
+
 theta = initializeParameters(hiddenSize, inputSize);
 
 addpath minFunc/
 options.Method = 'lbfgs'; 
-options.maxIter = maxIter;
+options.maxIter = 400;
 options.display = 'on';
 
 visibleSize = inputSize;
