@@ -23,7 +23,7 @@ for i=1:length(boxes)-2
         else
             pos = getPosition(b1, b2);
             if pos == 0 % ust
-                expression = sprintf('%s%s**{%s}', expression, buffer, character);
+                expression = sprintf('%s%s**%s', expression, buffer, character);
                 buffer = '';
             else
                 buffer = sprintf('%s%s', buffer, character);

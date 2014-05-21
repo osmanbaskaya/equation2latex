@@ -1,15 +1,20 @@
 SHELL := /bin/bash
-MATLAB_PATH=/ai/opt/matlab14a/bin/matlab -nojvm -nodisplay
+#MATLAB_PATH=/ai/opt/matlab14a/bin/matlab -nojvm -nodisplay
+MATLAB_PATH=/home/tyr/Documents/MATLAB/bin/matlab -nojvm -nodisplay
 
 paramTest.txt:
 	${MATLAB_PATH} < paramTest.m | tee $@
 
-%.eq: %.png
-	${MATLAB_PATH} -r "image2eq.m('$<'), quit"
+outputs/%.eq: outputs/%.png
+	${MATLAB_PATH} -r "image2eq('$<'), quit" | tail -2 | head -1 > $@
 
-%.tex: %.eq
-	python parse.py $<
+outputs/%.tex: outputs/%.eq
+	cat $< | python eq2tex.py > $@
 
-pdfs/%.pdf: %.tex:
-	latex2pdf $< > $@
-	#evince $@
+%.pdf: outputs/%.tex
+	cd outputs; pdflatex $*.tex; evince $@ & 
+
+clean:
+	rm -f outputs/*.pdf outputs/*.tex outputs/*.eq outputs/*.log
+
+.SECONDARY:

@@ -21,7 +21,8 @@ def f(node):
     else:
         return node.value
 
-eq = sys.argv[1]
+eq = sys.stdin.readline().strip()
+print >> sys.stderr, "INFO: EQ:", eq
 
 def getLatex(eq):
     ast = compiler.parse(eq)
@@ -49,4 +50,13 @@ def preprocess_equation(eq):
         eq2 = eq[index+1:]
         return "{%s}%s%s{%s}" % (getLatex(eq1), form[op], symbol, getLatex(eq2))
 
-print preprocess_equation(eq)
+text = """
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\\title{IUI Term Project}
+\\author{Baskaya O., Kuru O.,}
+\\begin{document}
+\maketitle
+\center{\\textbf{$%s$}}
+\end{document} """
+print text % preprocess_equation(eq)
