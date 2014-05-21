@@ -37,7 +37,7 @@ def preprocess_equation(eq):
         symbol = '\coprod'
         index = piIndex
     elif sumIndex > -1:
-        symbol = '\sum'
+        symbol = '\\sum'
         index = sumIndex
     else:
         return getLatex(eq)

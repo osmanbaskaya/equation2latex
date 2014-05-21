@@ -15,6 +15,6 @@ outputs/%.tex: outputs/%.eq
 	cd outputs; pdflatex $*.tex; evince $@ & 
 
 clean:
-	rm -f outputs/*.pdf outputs/*.tex outputs/*.eq outputs/*.log
+	rm -f outputs/*.pdf outputs/*.tex outputs/*.eq outputs/*.log outputs/*.aux
 
 .SECONDARY:

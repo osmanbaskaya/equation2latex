@@ -33,13 +33,10 @@ for i=1:length(boxes)-2
         expression = sprintf('%s%s%s', expression, buffer, character);
         buffer = '';
     else
-        % TODO: SIGMA vs.
-        ex = '';
+        expression = sprintf('%s%s', expression, character);
     end
 end
-
 expression = sprintf('%s%s', expression, buffer);
-
 end
 
 
@@ -58,8 +55,8 @@ function character = getCharacter(label)
         character = '/';
     elseif label == 15; % \sigma
         character = 'S'; 
-    elseif label == 16; % \coprod
-        character = 'C';
+    elseif label == 16; % \prod
+        character = 'P';
     end
 end
 

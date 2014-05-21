@@ -19,7 +19,7 @@ objects = objectSegmentation(CC, ImageSize);
 %% Classification
 
 %preds = softmaxPredict(softmaxModel, objects);
-preds = [3 5 0 2 11 5];
+preds = [15 3 2 11 5 4];
 
 
 %% Relativity
