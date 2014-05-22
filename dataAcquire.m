@@ -1,4 +1,4 @@
-function dataAcquire(input_path, output_path)
+function dataAcquire(input_path, output_path, doInvert)
 
 imageSize = 28;
 files = dir([input_path, '*.png']);
@@ -9,6 +9,13 @@ for i=1:numFiles
     digit = strtok(file.name, '-');
     I = imread([input_path, '/', file.name]);
     I = I(:,:,1);
+    I = I(50:740, 122:948); % Croping uncessesary regions (IPAD)
+    if doInvert
+        whiteIdx = I>100;
+        blackIdx = I<=100;
+        I(whiteIdx) = 0;
+        I(blackIdx) = 255;
+    end
     CC = bwconncomp(I);
     objects = objectSegmentation(CC, imageSize);
     objects = reshape(objects, imageSize, imageSize, size(objects, 2));

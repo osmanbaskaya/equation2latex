@@ -5,6 +5,8 @@ objects = zeros(ImageSize*ImageSize, CC.NumObjects);
 
 Regions = regionprops(CC);
 
+%[max1, max2] = CC.ImageSize;
+
 for i=1:CC.NumObjects
     J = zeros(CC.ImageSize);
     J(CC.PixelIdxList{i}) = 1;

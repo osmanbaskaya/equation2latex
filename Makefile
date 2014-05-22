@@ -5,7 +5,7 @@ MATLAB_PATH=/home/tyr/Documents/MATLAB/bin/matlab -nojvm -nodisplay
 paramTest.txt:
 	${MATLAB_PATH} < paramTest.m | tee $@
 
-outputs/%.eq: outputs/%.png
+outputs/%.eq: equations/%.png
 	${MATLAB_PATH} -r "image2eq('$<'), quit" | tail -2 | head -1 > $@
 
 outputs/%.tex: outputs/%.eq

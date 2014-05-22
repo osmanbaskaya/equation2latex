@@ -1,6 +1,6 @@
 function acc = testOnMy(model, opttheta)
 
-directory = '../28_28_images/';
+directory = '../digits/';
 inputSize = 28*28;
 hiddenSize = 200;
 

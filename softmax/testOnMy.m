@@ -1,6 +1,6 @@
 function acc = testOnMy(model)
 
-directory = '../28_28_images/';
+directory = '../digits/';
 inputSize=28*28;
 
 %% Load our test labels and features, O_O (Osman & Onur) dataset

@@ -10,6 +10,7 @@ function [cost, grad] = softmaxCost(theta, numClasses, inputSize, lambda, data, 
 
 % Unroll the parameters from theta
 theta = reshape(theta, numClasses, inputSize);
+numClasses = max(labels);
 
 numCases = size(data, 2);
 
