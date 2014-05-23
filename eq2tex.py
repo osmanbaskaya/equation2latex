@@ -15,7 +15,7 @@ def f(node):
     if isinstance(node, compiler.ast.Add):
         return '%s+%s' % (f(node.left), f(node.right))
     elif isinstance(node, compiler.ast.Power):
-        return '(%s^{%s})' % (f(node.left), f(node.right))
+        return '%s^{%s}' % (f(node.left), f(node.right))
     elif isinstance(node, compiler.ast.Mul):
         return '{%s}\\times{%s}' % (f(node.left), f(node.right))
     else:

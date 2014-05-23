@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 #MATLAB_PATH=/ai/opt/matlab14a/bin/matlab -nojvm -nodisplay
-MATLAB_PATH=/home/tyr/Documents/MATLAB/bin/matlab -nojvm -nodisplay
+#MATLAB_PATH=/home/tyr/Documents/MATLAB/bin/matlab -nojvm -nodisplay
+MATLAB_PATH=/Applications/MATLAB_R2013b.app/bin/matlab -nojvm -nodisplay
 
 paramTest.txt:
 	${MATLAB_PATH} < paramTest.m | tee $@
