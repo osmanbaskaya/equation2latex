@@ -20,11 +20,11 @@ for i=1:CC.NumObjects
     else
         object = J(objBox(2):objBox(2) + objBox(4), objBox(1)-slide:objBox(1) + objBox(3)+slide);
     end
-    %imshow(object)
+    imshow(object)
     object = imresize(object, [ImageSize-2*padding, ImageSize-2*padding]);
     object = padarray(object, [padding, padding]);
     % print( h, '-dpng', 'foo') should be tested
-    %imshow(object);
+    imshow(object);
     objects(:, i) = object(:);
 end
 end
