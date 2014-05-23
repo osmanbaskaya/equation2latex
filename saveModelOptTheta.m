@@ -2,9 +2,6 @@ clear; clc; close all;
 [digitData, digit_labels] = readData('digits/');
 [opData, op_labels] = readData('operators/');
 [data, labels] = combineData(digitData, digit_labels, opData, op_labels);
-
-%[data, labels] = readData('operators/');
-
 %opttheta = calculateOptTheta(data);
 load opdigit_theta
 

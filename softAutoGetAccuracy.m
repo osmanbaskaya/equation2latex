@@ -10,6 +10,7 @@ maxIter = 100;
 
 %numLabels  = length(unique(trainLabels));
 %numLabels = 10;
+numLabels = max(trainLabels);
 
 options.Method = 'lbfgs'; 
 options.maxIter = maxIter;
