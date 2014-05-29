@@ -22,7 +22,7 @@ def f(node):
         return node.value
 
 eq = sys.stdin.readline().strip()
-print >> sys.stderr, "INFO: EQ:", eq
+print >> sys.stderr, "Expression: ", eq
 
 def getLatex(eq):
     ast = compiler.parse(eq)
@@ -59,4 +59,12 @@ text = """
 \maketitle
 \center{\\textbf{$%s$}}
 \end{document} """
-print text % preprocess_equation(eq)
+try:
+    print text % preprocess_equation(eq)
+except:
+    print 'pasaaa'
+    sys.exit(1)
+
+
+
+
